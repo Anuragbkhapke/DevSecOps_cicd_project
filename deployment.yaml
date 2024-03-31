@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: react-app-deployment
+  name: react-app-dp1
 spec:
   replicas: 3  # Adjust the number of replicas as needed
   selector:
