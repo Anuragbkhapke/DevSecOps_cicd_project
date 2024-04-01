@@ -15,6 +15,7 @@ spec:
       containers:
         - name: react-app-container
           image: anuragkhapke/devsecops:latest  # Use your actual Docker image name and tag
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000  # The port your React app is listening on
 
