@@ -1,5 +1,9 @@
 pipeline{
     agent any
+    
+    triggers {
+    githubPush()
+     }
     tools{
         jdk 'jdk17'
         nodejs 'node16'
@@ -15,7 +19,7 @@ pipeline{
         }
         stage('Checkout from Git'){
             steps{
-                git branch: 'master', url: 'https://github.com/AWS-AZURE-Bootcamp5/Devsecops-Project1.git'
+                git branch: 'master', url: 'https://github.com/Anuragbkhapke/DevSecOps_cicd_project.git'
             }
         }
         stage("Sonarqube Analysis "){
@@ -53,21 +57,21 @@ stage("Docker Build & Push"){
             steps{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
-                       sh "docker build -t devsecops_ad ."
-                       sh "docker tag devsecops_ad praveensingam1994/devsecops_ad:latest "
-                       sh "docker push praveensingam1994/devsecops_ad:latest "
+                       sh "docker build -t devsecops ."
+                       sh "docker tag devsecops anuragkhapke/devsecops:latest "
+                       sh "docker push anuragkhapke/devsecops:latest "
                     }
                 }
             }
         }
         stage("TRIVY"){
             steps{
-                sh "trivy image praveensingam1994/devsecops_ad:latest > trivy.txt" 
+                sh "trivy image anuragkhapke/devsecops:latest > trivy.txt" 
             }
         }
 stage('Deploy to container'){
             steps{
-                sh 'docker run -d --name 2048 -p 3000:3000 praveensingam1994/devsecops_ad:latest'
+                sh 'docker run -d --name 2048 -p 3000:3000 anuragkhapke/devsecops:latest'
             }
         }
 stage('Deploy to kubernets'){
